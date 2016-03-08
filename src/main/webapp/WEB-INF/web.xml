@@ -19,6 +19,6 @@
 	</filter-mapping>
 	
 	<listener>
-		<listener-class>com.rgm.recipemanager.app.RecipeManagerApplication</listener-class>
+		<listener-class>com.rgm.recipemanager.app.RecipeManagerServletContextListener</listener-class>
 	</listener>
 </web-app>

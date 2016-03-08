@@ -27,6 +27,7 @@
 				'crossDomain': 'true',
 				'success': function(data) { 
 					$("#query").val(searchTerm);
+					$("#idField").val(data.response.docs[0].id);
 					$("#nameField").val(data.response.docs[0].name);
 					$("#urlField").val(data.response.docs[0].url);
 					$("#attributesField").val(data.response.docs[0].attributes);
@@ -44,20 +45,25 @@
 	</script>
 </head>
 <body>
-
 	<label for="urlSearchField">Search by URL:</label><input type="text" size="100" id="urlSearchField" /><p/>
 	<button id="searchButton">Search</button>
+	<p>OR</p>
+	<a href="ingredientSearch.jsp">Search by Ingredient</a>
 	<hr />
 	<div id="searchResults">
 		<div>Search Results for:<span id="query"></span></div>
-		<table>
-			<tr><td>Name</td><td><input type="text" size="100" id="nameField" /></td></tr>
-			<tr><td>URL</td><td><input type="text" size="100" id="urlField" /></td></tr>
-			<tr><td>Attributes</td><td><textarea id="attributesField" rows="4" cols="80"></textarea></td></tr>
-			<tr><td>Ingredients</td><td><textarea id="ingredientsField" rows="4" cols="80"></textarea></td></tr>
-			<tr><td>Directions</td><td><textarea id="directionsField" rows="6" cols="80"></textarea></td></tr>
-			<tr><td>Notes</td><td><textarea id="notesField" rows="2" cols="80"></textarea></td></tr>
-		</table>
+		<form action="/modify/" method="post">
+			<input type="hidden" id="idField" name="id" />
+			<table>
+				<tr><td>Name</td><td><input type="text" size="100" id="nameField" name="name" /></td></tr>
+				<tr><td>URL</td><td><input type="text" size="100" id="urlField" name="url" /></td></tr>
+				<tr><td>Attributes</td><td><textarea id="attributesField" rows="4" cols="80" name="attributes"></textarea></td></tr>
+				<tr><td>Ingredients</td><td><textarea id="ingredientsField" rows="4" cols="80" name="ingredients"></textarea></td></tr>
+				<tr><td>Directions</td><td><textarea id="directionsField" rows="6" cols="80" name="directions"></textarea></td></tr>
+				<tr><td>Notes</td><td><textarea id="notesField" rows="2" cols="80" name="notes"></textarea></td></tr>
+			</table>
+			<input type="submit" title="Save" />
+		</form>
 	</div>
 </body>
 </html>
