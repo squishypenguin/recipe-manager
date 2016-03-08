@@ -4,6 +4,9 @@
    version="3.0">
 	
 	<display-name>Recipe Manager</display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
 	
 	<filter>
 		<filter-name>guiceFilter</filter-name>

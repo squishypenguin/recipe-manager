@@ -11,5 +11,5 @@
 1. Execute `mvn clean package`
 2. Copy the generated war file in the target directory, to your tomcat distribution's webapps directory as ROOT.war
 ```
-cp target/recipe-manager-0.0.1-SNAPSHOT.war /usr/local/apache-tomcat-7.0.65/webapps/ROOT.war
+cp target/recipe-manager-0.0.1-SNAPSHOT.war /usr/local/apache-tomcat-8.0.32/webapps/ROOT.war
 ```
