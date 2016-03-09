@@ -22,10 +22,12 @@ public class RecipeManagerServletContextListener extends GuiceServletContextList
 				install(new JpaPersistModule("imported-recipes"));
 				filter("/*").through(PersistFilter.class);
 				
-				bind(ModifyRecipeServlet.class).in(Scopes.SINGLETON);
+				bind(ViewServlet.class).in(Scopes.SINGLETON);
 				bind(Recipe.class);
 				
-				serve("/modify/*").with(ModifyRecipeServlet.class);
+				serve("/modify/*").with(ViewServlet.class);
+				serve("/ingredientSearch").with(ViewServlet.class);
+				serve("/viewRecipe").with(ViewServlet.class);
 		    }
 		});
 	}

@@ -8,37 +8,60 @@
 	
 		<script type="text/javascript">
 			$(document).ready(function() {
-				$("#searchResults").hide();
+				$("#resultsPane").hide();
 				
-				$('#searchButton').click(function(event) {
+				$(".facet").on("click",function() {
+					alert($(this).val());
+				});
+				
+				$('#ingredientSearchButton').click(function(event) {
 				   event.preventDefault();
 		
-					var solrBaseQuery = "http://localhost:8983/solr/recipes/select?facet=true&facet.field=ingredients&facet.query=";
+					var solrBaseQuery = "http://localhost:8983/solr/recipes/select?facet=true&facet.field=ingredients_facet&q=ingredients_facet:";
 					var searchTerm = $("#ingredientSearchField").val();
-		
-					var queryurl = solrBaseQuery+queryString+"&wt=json&rows=20";
+					if (searchTerm.indexOf(' ') >= 0) {
+						searchTerm = "%22"+searchTerm+"%22";	
+					}
+					
+					var queryurl = solrBaseQuery+searchTerm+"&wt=json&rows=20&fl=id,name,url&json.nl=arrarr&facet.mincount=1&facet.limit=12";
 					$.ajax({
 						'url': queryurl,
 						'crossDomain': 'true',
 						'success': function(data) { 
+							$("#resultsCount").val(data.response.numFound);
 							$("#query").val(searchTerm);
-							$("#nameField").val(data.response.docs[0].name);
-							$("#urlField").val(data.response.docs[0].url);
-							$("#attributesField").val(data.response.docs[0].attributes);
-							$("#ingredientsField").val(data.response.docs[0].ingredients);
-							$("#directionsField").val(data.response.docs[0].directions);
-							$("#notesField").val(data.response.docs[0].notes);
-							$("#searchResults").show();
+
+							$.each(data.response.docs, function (index, value) {
+								var idField = "<input type=\"hidden\" name=\"idField"+index+"\""+value.id+"\"/>";
+								var nameField = "<div style=\"font-weight:bold\"><a href=\"/viewRecipe?id="+value.id+"\">"+value.name+"</a></div>";
+								var urlField = "<div>"+value.url+"</div>";
+								var container = "<div>"+idField+nameField+urlField+"</div>";
+								$("#searchResults").append(container);
+							});
+							
+							$.each(data.facet_counts.facet_fields.ingredients_facet, function (index, value) {
+								var facetField = "<div><span class=\"facet\">"+value[0]+"</span> <span>("+value[1]+")</span></div>";
+								$("#facets").append(facetField);
+							});
+							
+							$("#resultsPane").show();
 						},
 						'dataType': 'jsonp',
 						'jsonp': 'json.wrf'
 					});
 				});
+				
+				
 			});
 		</script>
 	</head>
 	<body>
 		<label for="ingredientSearchField">Search by Ingredient:</label><input type="text" size="70" id="ingredientSearchField" /><p/>
 		<button id="ingredientSearchButton">Search</button>
+		<hr/>
+		<div id="resultsCount"></div>
+		<table id="resultsPane">
+			<tr><td><span>Filter by</span><br/><div id="facets"></div></td><td style="vertical-align:text-top;"><div id="searchResults" style="vertical-align:text-top;text-align:top;"></div></td></tr>
+		</table>
 	</body>
 </html>

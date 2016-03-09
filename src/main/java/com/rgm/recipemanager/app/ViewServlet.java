@@ -14,16 +14,30 @@ import com.rgm.recipemanager.dao.RecipeRepository;
 import com.rgm.recipemanager.domain.Recipe;
 
 @Singleton
-public class ModifyRecipeServlet extends HttpServlet
+public class ViewServlet extends HttpServlet
 {
 	private static final long serialVersionUID = -3629584595013082227L;
 	@Inject Injector injector;
 	@Inject RecipeRepository recipeRepository;
 	
+	// yes... this needs to be handled more appropriately
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		response.getOutputStream().print("you got me");
+		String page;
+		switch (request.getRequestURI())
+		{
+			case "/ingredientSearch":
+				page = "/WEB-INF/pages/ingredientSearch.jsp";
+				break;
+			case "/viewRecipe":
+				recipeRepository.getRecipe(Long.valueOf(request.getParameter("id")));
+				page = "/WEB-INF/pages/viewRecipe.jsp";
+				break;
+			default:
+				page = "/";
+		}
+		request.getRequestDispatcher(page).include(request, response);
 	}
 	
 	@Override
@@ -33,6 +47,6 @@ public class ModifyRecipeServlet extends HttpServlet
 		recipe.processRequest();
 		
 		recipeRepository.updateRecipe(recipe);
-		response.getOutputStream().print("posted me up");		
+		response.sendRedirect("/");
 	}
 }
