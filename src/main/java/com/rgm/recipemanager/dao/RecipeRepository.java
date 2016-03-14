@@ -34,10 +34,10 @@ public class RecipeRepository
 	public Recipe getRecipe(Long recipeId)
 	{
 		final EntityManager entityManager = entityManagerProvider.get();
-		final Query query = entityManager.createQuery("select id,name,CONVERT(attributes_blob USING utf8) as attributes,CONVERT(ingredients_blob USING utf8) as ingredients,CONVERT(directions_blob USING utf8) as directions,notes,url from imported_recipe where id=" + recipeId);
+		//final Query query = ; //.createQuery("select id,name,CONVERT(attributes_blob USING utf8) as attributes,CONVERT(ingredients_blob USING utf8) as ingredients,CONVERT(directions_blob USING utf8) as directions,notes,url from imported_recipe where id=" + recipeId);
 		
 		entityManager.getTransaction().begin();
-		final Recipe recipe = (Recipe)query.getSingleResult();
+		final Recipe recipe = entityManager.find(Recipe.class, recipeId);
 		entityManager.getTransaction().commit();
 		
 		return recipe;

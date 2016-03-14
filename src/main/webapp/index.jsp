@@ -48,7 +48,9 @@
 	<label for="urlSearchField">Search by URL:</label><input type="text" size="100" id="urlSearchField" /><p/>
 	<button id="searchButton">Search</button>
 	<p>OR</p>
-	<a href="ingredientSearch.jsp">Search by Ingredient</a>
+	<a href="/ingredientSearch">Search by Ingredient</a>
+	<p>OR</p>
+	<a href="/addRecipe">Add a recipe</a>
 	<hr />
 	<div id="searchResults">
 		<div>Search Results for:<span id="query"></span></div>

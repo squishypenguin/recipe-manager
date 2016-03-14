@@ -28,6 +28,7 @@ public class RecipeManagerServletContextListener extends GuiceServletContextList
 				serve("/modify/*").with(ViewServlet.class);
 				serve("/ingredientSearch").with(ViewServlet.class);
 				serve("/viewRecipe").with(ViewServlet.class);
+				serve("/addRecipe").with(ViewServlet.class);
 		    }
 		});
 	}

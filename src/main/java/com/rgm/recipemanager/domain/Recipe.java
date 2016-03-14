@@ -51,7 +51,11 @@ public @Data class Recipe
 	
 	public void processRequest()
 	{
-		setId(Long.valueOf(parameters.get("id")[0]));
+		final String[] paramId = parameters.get("id");
+		if (paramId != null)
+		{
+			setId(Long.valueOf(paramId[0]));
+		}
 		setName((String)parameters.get("name")[0]);
 		setUrl((String)parameters.get("url")[0]);
 		setAttributes((String)parameters.get("attributes")[0]);

@@ -34,6 +34,9 @@ public class ViewServlet extends HttpServlet
 				recipeRepository.getRecipe(Long.valueOf(request.getParameter("id")));
 				page = "/WEB-INF/pages/viewRecipe.jsp";
 				break;
+			case "/createRecipe":
+				page = "/WEB-INF/pages/addRecipe.jsp";
+				break;
 			default:
 				page = "/";
 		}
@@ -46,7 +49,14 @@ public class ViewServlet extends HttpServlet
 		final Recipe recipe = injector.getInstance(Recipe.class);
 		recipe.processRequest();
 		
-		recipeRepository.updateRecipe(recipe);
+		switch (request.getRequestURI())
+		{
+			case "/addRecipe":
+				recipeRepository.createRecipe(recipe);
+				break;
+			default:
+				recipeRepository.updateRecipe(recipe);
+		}
 		response.sendRedirect("/");
 	}
 }
