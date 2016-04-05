@@ -1,4 +1,4 @@
-package com.rgm.recipemanager.app;
+package com.rgm.recipemanager.web;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ public class ViewServlet extends HttpServlet
 	@Inject Injector injector;
 	@Inject RecipeRepository recipeRepository;
 	
-	// yes... this needs to be handled more appropriately
+	// yes... this needs to be handled more appropriately - or just scrap guice and go to spring
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
@@ -31,10 +31,9 @@ public class ViewServlet extends HttpServlet
 				page = "/WEB-INF/pages/ingredientSearch.jsp";
 				break;
 			case "/viewRecipe":
-				recipeRepository.getRecipe(Long.valueOf(request.getParameter("id")));
 				page = "/WEB-INF/pages/viewRecipe.jsp";
 				break;
-			case "/createRecipe":
+			case "/addRecipe":
 				page = "/WEB-INF/pages/addRecipe.jsp";
 				break;
 			default:
@@ -49,6 +48,8 @@ public class ViewServlet extends HttpServlet
 		final Recipe recipe = injector.getInstance(Recipe.class);
 		recipe.processRequest();
 		
+		// TODO trigger a solr reindex to get this data
+		// TODO need a way to regenerate the tags
 		switch (request.getRequestURI())
 		{
 			case "/addRecipe":

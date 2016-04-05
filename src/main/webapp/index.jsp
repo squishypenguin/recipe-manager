@@ -45,8 +45,12 @@
 	</script>
 </head>
 <body>
-	<label for="urlSearchField">Search by URL:</label><input type="text" size="100" id="urlSearchField" /><p/>
-	<button id="searchButton">Search</button>
+	<form>
+		<div class="form-group">
+			<label for="urlSearchField">Search by URL:</label><input type="text" size="100" id="urlSearchField" class="form-control" />
+		</div>
+		<button id="searchButton" type="submit" class="btn btn-default">Search</button>
+	</form>
 	<p>OR</p>
 	<a href="/ingredientSearch">Search by Ingredient</a>
 	<p>OR</p>

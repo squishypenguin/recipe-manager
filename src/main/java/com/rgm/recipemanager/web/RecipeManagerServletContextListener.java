@@ -1,4 +1,4 @@
-package com.rgm.recipemanager.app;
+package com.rgm.recipemanager.web;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -11,7 +11,6 @@ import com.rgm.recipemanager.domain.Recipe;
 
 public class RecipeManagerServletContextListener extends GuiceServletContextListener
 {
-
 	@Override
 	protected Injector getInjector()
 	{

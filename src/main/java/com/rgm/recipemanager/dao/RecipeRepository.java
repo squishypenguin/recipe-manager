@@ -39,7 +39,7 @@ public class RecipeRepository
 		entityManager.getTransaction().begin();
 		final Recipe recipe = entityManager.find(Recipe.class, recipeId);
 		entityManager.getTransaction().commit();
-		
+		System.out.println(recipe.getAttributes());
 		return recipe;
 	}
 }

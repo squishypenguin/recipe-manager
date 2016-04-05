@@ -5,16 +5,15 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Search by Ingredient</title>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	
 		<script type="text/javascript">
 			var solrBaseQuery = "http://localhost:8983/solr/recipes/select?facet=true&facet.field=ingredients_facet&q=ingredients_facet:";
 
-			function clickMe(event) {
-				alert("clicked " + event.innerHTML);	
-			}
-
 			$(document).ready(function() {
 				$("#resultsPane").hide();
+				
+				$("#facets").css('cursor', 'pointer');
 				
 				$("div").on("click","span.facetfield",function() {
 					doSearch($(this).text());
@@ -50,13 +49,15 @@
 								var idField = "<input type=\"hidden\" name=\"idField"+index+"\""+value.id+"\"/>";
 								var nameField = "<div style=\"font-weight:bold\"><a href=\"/viewRecipe?id="+value.id+"\">"+value.name+"</a></div>";
 								var urlField = "<div>"+value.url+"</div>";
-								var container = "<div>"+idField+nameField+urlField+"</div>";
+								var container = "<div style=\"margin-bottom:5px\">"+idField+nameField+urlField+"</div>";
 								$("#searchResults").append(container);
 							});
 							
 							$.each(data.facet_counts.facet_fields.ingredients_facet, function (index, value) {
-								var facetField = "<div><span class=\"facetfield\">"+value[0]+"</span> <span>("+value[1]+")</span></div>";
-								$("#facets").append(facetField);
+								if (value[0] != '') {
+									var facetField = "<div><span class=\"facetfield\">"+value[0]+"</span> <span>("+value[1]+")</span></div>";
+									$("#facets").append(facetField);
+								}
 							});
 							
 							$("#resultsPane").show();
@@ -78,12 +79,19 @@
 		</script>
 	</head>
 	<body>
-		<label for="ingredientSearchField">Search by Ingredient:</label><input type="text" size="70" id="ingredientSearchField" /><p/>
-		<button id="ingredientSearchButton">Search</button>
-		<hr/>
-		<div id="resultsCount"></div>
-		<table id="resultsPane"  style="vertical-align:text-top;">
-			<tr><td style="vertical-align:text-top;width:35%;"><span>Filter by</span><br/><div id="facets"></div></td><td style="vertical-align:text-top;text-align:top;"><div id="searchResults" style="vertical-align:text-top;text-align:top;"></div></td></tr>
-		</table>
+		<div class="container-fluid">
+			<form>
+				<div class="form-group">
+					<label for="ingredientSearchField">Search by Ingredient:</label><input type="text" size="70" id="ingredientSearchField" class="form-control" />
+					<button id="ingredientSearchButton" class="btn btn-default">Search</button>
+				</div>
+			</form>
+			<hr/>
+			<div id="resultsCount"></div>
+			<div id="resultsPane" class="row">
+				<div class="col-md-2"><span><strong>Filter by</strong></span><br/><div id="facets"></div></div>
+				<div class="col-md-10"><div id="searchResults" style="vertical-align:text-top;text-align:top;"></div></div>
+			</div>
+		</div>
 	</body>
 </html>
