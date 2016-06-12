@@ -98,7 +98,12 @@ public @Data class Recipe
 
 		final String ingredientsBlob = (String)parameters.get("ingredients")[0];
 		final String[] lines = StringUtils.split(ingredientsBlob, "\n");
-		setIngredients(StringUtils.join(lines, "|"));
+		final StringBuilder builder = new StringBuilder();
+		for (String line : lines)
+		{
+			builder.append(line.trim() + "|");
+		}
+		setIngredients(builder.toString());
 		
 		final Set<String> ingredientsTags = new IngredientTagsBuilder().withIngredientsList(Lists.newArrayList(lines)).build();
 		setIngredientsTags(StringUtils.join(ingredientsTags, "|"));

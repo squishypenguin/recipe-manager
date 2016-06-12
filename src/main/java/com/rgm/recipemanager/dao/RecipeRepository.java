@@ -1,7 +1,6 @@
 package com.rgm.recipemanager.dao;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -24,10 +23,18 @@ public class RecipeRepository
 	
 	public void createRecipe(Recipe recipe)
 	{
-		final EntityManager entityManager = entityManagerProvider.get();
-		entityManager.getTransaction().begin();
-		entityManager.persist(recipe);
-		entityManager.getTransaction().commit();
+		try
+		{
+			final EntityManager entityManager = entityManagerProvider.get();
+			entityManager.getTransaction().begin();
+			entityManager.persist(recipe);
+			entityManager.getTransaction().commit();
+		}
+		catch (Exception e)
+		{
+			System.out.println("Error saving recipe: [" + recipe.toString() + "]");
+			e.printStackTrace();
+		}
 	}
 
 	// create procs

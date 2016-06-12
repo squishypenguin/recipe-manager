@@ -51,6 +51,15 @@
 			$('.fa-pencil').click(function(event) {
 				event.preventDefault();
 				alert($(this).parent().attr("id"));
+				var containerDivId = $(this).parent().attr("id");
+				if (containerDivId === "ingredientsContainer") { // or do as a popup?
+					var existingIngredText = $("#ingredients").text();
+					var ingredTextarea = '<textarea id="ingredientsField" rows="8" name="ingredients">'+existingIngredText+'</textarea>';
+					$("#ingredients").empty();
+					$("#ingredients").append(ingredTextarea);
+				} else if (containerDivId === "directionsContainer") {
+					
+				}
 			});
 		});
 	</script>
