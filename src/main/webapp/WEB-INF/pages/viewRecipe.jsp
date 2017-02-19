@@ -21,7 +21,7 @@
 					$.each(data.response.docs, function (index, value) {
 						$("#recipeName").text(value.name);
 						$("#url").text(value.url);
-						
+						$("#name").text(value.name);
 						var atts = "<ul class='list-unstyled'>";
 						$.each(value.attributes, function (index, value) {
 							atts += "<li>"+value+"</li>";
@@ -50,7 +50,7 @@
 			
 			$('.fa-pencil').click(function(event) {
 				event.preventDefault();
-				alert($(this).parent().attr("id"));
+				//alert($(this).parent().attr("id"));
 				var containerDivId = $(this).parent().attr("id");
 				if (containerDivId === "ingredientsContainer") { // or do as a popup?
 					var existingIngredText = $("#ingredients").text();
@@ -58,7 +58,10 @@
 					$("#ingredients").empty();
 					$("#ingredients").append(ingredTextarea);
 				} else if (containerDivId === "directionsContainer") {
-					
+					var existingDirectionsText = $("#directions").text();
+					var directionsTextarea = '<textarea id="directionsField" rows="8" cols="50" name="directions">'+existingDirectionsText+'</textarea>';
+					$("#directions").empty();
+					$("#directions").append(directionsTextarea);
 				}
 			});
 		});
@@ -72,12 +75,16 @@
 		</ul>
 	</div>
 	<div class="container-fluid">
-	 	<div id="nameContainer"><h1 id="recipeName"></h1></div>
-	 	<div id="url"></div>
-	 	<p id="attributes"></p>
-	 	<div id="ingredientsContainer"><strong>Ingredients</strong> <i class="fa fa-pencil"></i><div id="ingredients"></div></div>
-	 	<div id="directionsContainer"><strong>Directions</strong> <i class="fa fa-pencil"></i><div id="directions"></div></div>
-	 	<div id="notes"></div>
+		<form action="/modify/recipe" method="post">
+			<input type="hidden" name="name" />
+		 	<div id="nameContainer"><h1 id="recipeName"></h1></div>
+		 	<div id="url"></div>
+		 	<p id="attributes"></p>
+		 	<div id="ingredientsContainer"><strong>Ingredients</strong> <i class="fa fa-pencil"></i><div id="ingredients"></div></div>
+		 	<div id="directionsContainer"><strong>Directions</strong> <i class="fa fa-pencil"></i><div id="directions"></div></div>
+		 	<div id="notes"></div>
+		 	<button type="submit" class="btn btn-default">Update</button>
+		 </form>
 	 </div>
 </body>
 </html>

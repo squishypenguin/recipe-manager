@@ -1,6 +1,7 @@
 package com.rgm.recipemanager.web;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +20,7 @@ public class ViewServlet extends HttpServlet
 	private static final long serialVersionUID = -3629584595013082227L;
 	@Inject Injector injector;
 	@Inject RecipeRepository recipeRepository;
+	@Inject private Logger logger;
 	
 	// yes... this needs to be handled more appropriately - or just scrap guice and go to spring
 	@Override
@@ -53,9 +55,11 @@ public class ViewServlet extends HttpServlet
 		switch (request.getRequestURI())
 		{
 			case "/addRecipe":
+				logger.info("Directing to create recipe");
 				recipeRepository.createRecipe(recipe);
 				break;
 			default:
+				logger.info("Directing to update recipe: " + recipe.getUrl());
 				recipeRepository.updateRecipe(recipe);
 		}
 		response.sendRedirect("/");
