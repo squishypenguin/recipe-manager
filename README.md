@@ -1,6 +1,6 @@
 # recipe-manager
 ## Webapp to manage recipe library.
-
+ 
 # Installation Notes
 1. This application uses Java 8 so if you don't have that installed get it from [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 2. Install latest version of [Maven](https://maven.apache.org/download.cgi)
